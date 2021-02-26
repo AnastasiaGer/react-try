@@ -1,14 +1,15 @@
 import React from 'react';
-import Movies from '../Movies/Movies.jsx';
+import PropTypes from 'prop-types';
+import MoviesList from '../MoviesList/MoviesList.jsx';
 const Main = (props) => {
   // eslint-disable-next-line react/prop-types
-  const {cardBgAlt, movieGenre, movieDate, moviesTitles} = props;
+  const {movieCard, smallMovies} = props;
 
   return (
     <React.Fragment>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt={cardBgAlt} />
+          <img src="img/bg-the-grand-budapest-hotel.jpg" alt={movieCard.TITLE} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -32,14 +33,14 @@ const Main = (props) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt={cardBgAlt} width="218" height="327" />
+              <img src="img/the-grand-budapest-hotel-poster.jpg" alt={movieCard.TITLE} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{cardBgAlt}</h2>
+              <h2 className="movie-card__title">{movieCard.TITLE}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{movieGenre}</span>
-                <span className="movie-card__year">{movieDate}</span>
+                <span className="movie-card__genre">{movieCard.GENRE}</span>
+                <span className="movie-card__year">{movieCard.DATE}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -98,8 +99,8 @@ const Main = (props) => {
             </li>
           </ul>
 
-          <Movies
-            moviesTitles={moviesTitles}
+          <MoviesList
+            smallMovies={smallMovies}
           />
 
           <div className="catalog__more">
@@ -123,6 +124,20 @@ const Main = (props) => {
       </div>
     </React.Fragment>
   );
+};
+
+Main.propTypes = {
+  movieCard: PropTypes.shape({
+    TITLE: PropTypes.string.isRequired,
+    GENRE: PropTypes.string.isRequired,
+    DATE: PropTypes.string.isRequired,
+  }).isRequired,
+  smallMovies: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+      }).isRequired
+  ).isRequired,
 };
 
 export default Main;

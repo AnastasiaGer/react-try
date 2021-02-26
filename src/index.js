@@ -2,22 +2,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './containers/App/App.jsx';
+import {MovieCard, smallMovies} from './mocks/films';
 
 const root = document.querySelector(`#root`);
 
-const Movie = {
-  ALT: `The Grand Budapest Hotel`,
-  GENRE: `Drama`,
-  DATE: `2014`,
-};
-
-const moviesTitles = [`Fantastic Beasts: The Crimes of Grindelwald`, `Bohemian Rhapsody`, `Macbeth`, `Aviator`, `We need to talk about Kevin`, `What We Do in the Shadows`, `Revenant`, `Johnny English`, `Shutter Island`, `Pulp Fiction`, `No Country for Old Men`, `Snatch`, `Moonrise Kingdom`, `Seven Years in Tibet`, `Midnight Special`, `War of the Worlds`, `Dardjeeling Limited`, `Orlando`, `Mindhunter`, `Midnight Special`];
-
-
 ReactDOM.render(
     <App
-      cardBgAlt={Movie.ALT}
-      movieGenre={Movie.GENRE}
-      moviesTitles={moviesTitles} />,
+      movieCard={MovieCard}
+      smallMovies={smallMovies} />,
     root
 );

@@ -1,15 +1,13 @@
 import React from 'react';
-import Main from "../main/main.jsx";
+import Main from "../Main/Main.jsx";
 
 const App = (props) => {
   // eslint-disable-next-line react/prop-types
-  const {cardBgAlt, movieGenre, movieDate, moviesTitles} = props;
+  const {movieCard, smallMovies} = props;
 
   return <Main
-    cardBgAlt={cardBgAlt}
-    movieGenre={movieGenre}
-    movieDate={movieDate}
-    moviesTitles={moviesTitles} />;
+    movieCard={movieCard}
+    smallMovies={smallMovies} />;
 };
 
 export default App;
