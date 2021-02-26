@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import MoviesList from '../MoviesList/MoviesList.jsx';
 const Main = (props) => {
   // eslint-disable-next-line react/prop-types
-  const {movieCard, smallMovies} = props;
+  const {movieCard, smallMovies, onCardHover, onTitleClick} = props;
 
   return (
     <React.Fragment>
@@ -101,6 +101,8 @@ const Main = (props) => {
 
           <MoviesList
             smallMovies={smallMovies}
+            onMouseOver={onCardHover}
+            onClick={onTitleClick}
           />
 
           <div className="catalog__more">
@@ -138,6 +140,8 @@ Main.propTypes = {
         image: PropTypes.string.isRequired,
       }).isRequired
   ).isRequired,
+  onTitleClick: PropTypes.func.isRequired,
+  onCardHover: PropTypes.func.isRequired,
 };
 
 export default Main;

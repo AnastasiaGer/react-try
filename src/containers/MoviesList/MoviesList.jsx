@@ -1,34 +1,46 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import SmallMovieCard from "../SmallMovieCard/SmallMovieCard.jsx";
 
-const MoviesList = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const {smallMovies} = props;
+export default class MoviesList extends PureComponent {
+  constructor(props) {
+    super(props);
 
-  return (
-    <React.Fragment>
+    this.state = {
+      currentMovie: null
+    };
+  }
+
+  render() {
+    const {smallMovies, onTitleClick} = this.props;
+
+    return (
       <div className="catalog__movies-list">
         {smallMovies.map((movie, index) => {
           return (
             <SmallMovieCard
               key={movie.title + index}
               movie={movie}
+              onTitleClick={onTitleClick}
+              onCardHover={() => {
+                this.setState({
+                  currentMovie: movie
+                });
+              }}
             />
           );
         })}
       </div>
-    </React.Fragment>
-  );
-};
+    );
+  }
+}
 
 MoviesList.propTypes = {
   smallMovies: PropTypes.arrayOf(
       PropTypes.shape({
-        title: PropTypes.string,
-        image: PropTypes.string,
-      })
-  ),
+        title: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+      }).isRequired
+  ).isRequired,
+  onTitleClick: PropTypes.func,
 };
-
-export default MoviesList;
