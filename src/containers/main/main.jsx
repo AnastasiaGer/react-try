@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import MoviesList from '../MoviesList/MoviesList.jsx';
 const Main = (props) => {
   // eslint-disable-next-line react/prop-types
-  const {movieCard, smallMovies, onMovieCardClick} = props;
+  const {movieCard, smallMovies, onMovieCardClick, onMovieCardHover} = props;
   const {title, genre, date, background, poster} = movieCard;
   return (
     <React.Fragment>
@@ -102,6 +102,7 @@ const Main = (props) => {
           <MoviesList
             smallMovies={smallMovies}
             onMovieCardClick={onMovieCardClick}
+            onMovieCardHover={onMovieCardHover}
           />
 
           <div className="catalog__more">
@@ -150,7 +151,8 @@ Main.propTypes = {
         starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
       }).isRequired
   ).isRequired,
-  onMovieCardClick: PropTypes.func.isRequired
+  onMovieCardClick: PropTypes.func.isRequired,
+  onMovieCardHover: PropTypes.func,
 };
 
 export default Main;
