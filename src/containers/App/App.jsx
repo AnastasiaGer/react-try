@@ -6,6 +6,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import MoviePage from '../MoviePage/MoviePage.jsx';
 import {PageNames} from '../../const.js';
 
+
 class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -19,7 +20,7 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {movieCard, smallMovies} = this.props;
+    const {movieCard, smallMovies, movieReviews} = this.props;
     const {currentPage, currentMovie} = this.state;
 
     if (currentPage === PageNames.MAIN) {
@@ -35,7 +36,9 @@ class App extends PureComponent {
     if (currentPage === PageNames.MOVIE_DETAILS) {
       return (
         <MoviePage
-          movieCard={currentMovie} />
+          movieCard={currentMovie}
+          movieReviews={movieReviews}
+        />
       );
     }
 
@@ -97,6 +100,14 @@ App.propTypes = {
         starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
       }).isRequired
   ).isRequired,
+  movieReviews: PropTypes.arrayOf(
+      PropTypes.shape({
+        author: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+        rating: PropTypes.number.isRequired,
+        text: PropTypes.string.isRequired,
+      }).isRequired
+  ),
 };
 
 export default App;

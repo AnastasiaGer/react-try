@@ -1,9 +1,43 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import PropTypes from "prop-types";
+import PageOverview from '../PageOverview/PageOverview.jsx';
+import PageDetails from '../PageDetails/PageDetails.jsx';
+import PageReviews from '../PageReviews/PageReviews.jsx';
+
+import withTabs from '../../hocs/with-tabs.jsx';
+
 const MoviePage = (props) => {
-  const {movieCard} = props;
-  const {title, genre, date, poster, background, rating, description, starring, director, scores} = movieCard;
+  const {movieCard, movieReviews, renderTabs,
+    activeTab} = props;
+  const {title, genre, date, poster, background, rating, description, starring, director, scores, movieDurationTime} = movieCard;
+
+  const renderActiveTab = () => {
+    switch (activeTab) {
+      case `Overview`:
+        return <PageOverview
+          rating={rating}
+          scores={scores}
+          description={description}
+          director={director}
+          starring={starring}
+        />;
+      case `Details`:
+        return <PageDetails
+          director={director}
+          genre={genre}
+          movieDurationTime={movieDurationTime}
+          starring={starring}
+          date={date}
+        />;
+      case `Reviews`:
+        return <PageReviews
+          movieReviews={movieReviews}
+        />;
+      default:
+        return ``;
+    }
+  };
   return (
     <React.Fragment>
       <section className="movie-card movie-card--full">
@@ -65,36 +99,9 @@ const MoviePage = (props) => {
             </div>
 
             <div className="movie-card__desc">
-              <nav className="movie-nav movie-card__nav">
-                <ul className="movie-nav__list">
-                  <li className="movie-nav__item movie-nav__item--active">
-                    <a href="#" className="movie-nav__link">Overview</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Details</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
+              {renderTabs()}
 
-
-              <div className="movie-rating">
-                <div className="movie-rating__score">{rating}</div>
-                <p className="movie-rating__meta">
-                  <span className="movie-rating__level">{rating}</span>
-                  <span className="movie-rating__count">{scores} ratings</span>
-                </p>
-              </div>
-
-              <div className="movie-card__text">
-                <p>{description}</p>
-
-                <p className="movie-card__director"><strong>Director: {director } </strong></p>
-
-                <p className="movie-card__starring"><strong>Starring: {starring.join(`, `)} </strong></p>
-              </div>
+              {renderActiveTab()}
             </div>
           </div>
         </div>
@@ -174,8 +181,19 @@ MoviePage.propTypes = {
     scores: PropTypes.number.isRequired,
     director: PropTypes.string.isRequired,
     starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    movieDurationTime: PropTypes.string.isRequired,
   }).isRequired,
+  renderTabs: PropTypes.func.isRequired,
+  activeTab: PropTypes.string.isRequired,
+  movieReviews: PropTypes.arrayOf(
+      PropTypes.shape({
+        author: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+        rating: PropTypes.number.isRequired,
+        text: PropTypes.string.isRequired,
+      }).isRequired
+  ),
 };
 
 
-export default MoviePage;
+export default withTabs(MoviePage);
