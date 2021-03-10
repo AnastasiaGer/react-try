@@ -20,7 +20,7 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {movieCard, smallMovies, movieReviews} = this.props;
+    const {movieCard, smallMovies, movieReviews, onMovieCardClick, onMovieCardHover} = this.props;
     const {currentPage, currentMovie} = this.state;
 
     if (currentPage === PageNames.MAIN) {
@@ -38,6 +38,9 @@ class App extends PureComponent {
         <MoviePage
           movieCard={currentMovie}
           movieReviews={movieReviews}
+          smallMovies={smallMovies}
+          onMovieCardClick={onMovieCardClick}
+          onMovieCardHover={onMovieCardHover}
         />
       );
     }
@@ -108,6 +111,8 @@ App.propTypes = {
         text: PropTypes.string.isRequired,
       }).isRequired
   ),
+  onMovieCardClick: PropTypes.func,
+  onMovieCardHover: PropTypes.func,
 };
 
 export default App;

@@ -4,13 +4,20 @@ import PropTypes from "prop-types";
 import PageOverview from '../PageOverview/PageOverview.jsx';
 import PageDetails from '../PageDetails/PageDetails.jsx';
 import PageReviews from '../PageReviews/PageReviews.jsx';
+import MoviesList from '../MoviesList/MoviesList.jsx';
 
 import withTabs from '../../hocs/with-tabs.jsx';
 
+const getSimilarCards = (arr, genre) => {
+  return arr.filter((movie) => movie.genre === genre).slice(0, 4);
+};
+
 const MoviePage = (props) => {
   const {movieCard, movieReviews, renderTabs,
-    activeTab} = props;
+    activeTab, smallMovies, onMovieCardClick, onMovieCardHover} = props;
   const {title, genre, date, poster, background, rating, description, starring, director, scores, movieDurationTime} = movieCard;
+
+  const similarCards = getSimilarCards(smallMovies, genre);
 
   const renderActiveTab = () => {
     switch (activeTab) {
@@ -111,43 +118,11 @@ const MoviePage = (props) => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__movies-list">
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-              </h3>
-            </article>
-
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175" />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Bohemian Rhapsody</a>
-              </h3>
-            </article>
-
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175" />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Macbeth</a>
-              </h3>
-            </article>
-
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/aviator.jpg" alt="Aviator" width="280" height="175" />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Aviator</a>
-              </h3>
-            </article>
-          </div>
+          <MoviesList
+            smallMovies={similarCards}
+            onMovieCardClick={onMovieCardClick}
+            onMovieCardHover={onMovieCardHover}
+          />
         </section>
 
         <footer className="page-footer">
@@ -193,6 +168,23 @@ MoviePage.propTypes = {
         text: PropTypes.string.isRequired,
       }).isRequired
   ),
+  smallMovies: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        genre: PropTypes.string.isRequired,
+        date: PropTypes.string.isRequired,
+        background: PropTypes.string.isRequired,
+        poster: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+        description: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+        rating: PropTypes.number.isRequired,
+        scores: PropTypes.number.isRequired,
+        director: PropTypes.string.isRequired,
+        starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+      }).isRequired
+  ).isRequired,
+  onMovieCardClick: PropTypes.func,
+  onMovieCardHover: PropTypes.func,
 };
 
 
