@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MoviesList from '../MoviesList/MoviesList.jsx';
 import {CustomPropTypes} from '../../utils/props.js';
-import GenresList from '../GenresList/GenresList.jsx'
-;const Main = ({movieCard, smallMovies, onMovieCardClick, onMovieCardHover, onGenreItemClick, activeGenre, genres}) => {
+import GenresList from '../GenresList/GenresList.jsx';
+import ShowMoreButton from '../ShowMoreButton/ShowMoreButton.jsx';
+const Main = ({movieCard, smallMovies, onMovieCardClick, onMovieCardHover, onGenreItemClick, activeGenre, genres, onShowMoreClick, shown}) => {
   const {title, genre, date} = movieCard;
   return (
     <React.Fragment>
@@ -74,14 +75,12 @@ import GenresList from '../GenresList/GenresList.jsx'
 
 
           <MoviesList
-            smallMovies={smallMovies}
+            smallMovies={smallMovies.slice(0, shown)}
             onMovieCardClick={onMovieCardClick}
             onMovieCardHover={onMovieCardHover}
           />
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {smallMovies.length > shown ? <ShowMoreButton onShowMoreClick={onShowMoreClick} /> : ``}
         </section>
 
         <footer className="page-footer">
@@ -110,6 +109,8 @@ Main.propTypes = {
   activeGenre: PropTypes.string,
   genres: PropTypes.arrayOf(PropTypes.string),
   onGenreItemClick: PropTypes.func,
+  onShowMoreClick: PropTypes.func,
+  shown: PropTypes.number,
 };
 
 export default Main;

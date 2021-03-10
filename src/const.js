@@ -18,3 +18,5 @@ export const Tabs = {
 };
 
 export const DefaultGenre = `All genres`;
+
+export const MAX_SIMILAR_CARDS = 4;
