@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MoviesList from '../MoviesList/MoviesList.jsx';
-const Main = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const {movieCard, smallMovies, onMovieCardClick, onMovieCardHover} = props;
-  const {title, genre, date, background, poster} = movieCard;
+import {CustomPropTypes} from '../../utils/props.js';
+const Main = ({movieCard, smallMovies, onMovieCardClick, onMovieCardHover}) => {
+  const {title, genre, date} = movieCard;
   return (
     <React.Fragment>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src={background} alt={title} />
+          <img src="img/bg-the-grand-budapest-hotel.jpg" alt={title} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -33,7 +32,7 @@ const Main = (props) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src={poster} alt={title} width="218" height="327" />
+              <img src="img/the-grand-budapest-hotel-poster.jpg" alt={title} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
@@ -129,28 +128,8 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  movieCard: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    background: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-  }).isRequired,
-  smallMovies: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        genre: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        background: PropTypes.string.isRequired,
-        poster: PropTypes.string.isRequired,
-        id: PropTypes.number.isRequired,
-        description: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-        rating: PropTypes.number.isRequired,
-        scores: PropTypes.number.isRequired,
-        director: PropTypes.string.isRequired,
-        starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-      }).isRequired
-  ).isRequired,
+  movieCard: CustomPropTypes.MOVIE,
+  smallMovies: PropTypes.arrayOf(CustomPropTypes.MOVIE),
   onMovieCardClick: PropTypes.func.isRequired,
   onMovieCardHover: PropTypes.func,
 };

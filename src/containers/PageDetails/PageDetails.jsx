@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import {CustomPropTypes} from '../../utils/props.js';
 
 const PageDetails = (movieCard) => {
   const {director, starring, genre, movieDurationTime, date} = movieCard;
@@ -34,13 +34,7 @@ const PageDetails = (movieCard) => {
 };
 
 PageDetails.propTypes = {
-  movieCard: PropTypes.shape({
-    genre: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    director: PropTypes.string,
-    starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    movieDurationTime: PropTypes.string.isRequired,
-  }),
+  movieCard: CustomPropTypes.MOVIE,
 };
 
 export default PageDetails;

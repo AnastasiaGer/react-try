@@ -2,15 +2,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './containers/App/App.jsx';
-import {movieCard, smallMovies, movieReviews} from './mocks/films';
+import {createStore} from "redux";
+import {Provider} from "react-redux";
+import {reducer} from "./reducer/reducer.js";
 
 const root = document.querySelector(`#root`);
 
+const store = createStore(
+    reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+);
+
 ReactDOM.render(
-    <App
-      movieCard={movieCard}
-      smallMovies={smallMovies}
-      movieReviews={movieReviews}
-    />,
+    <Provider store={store}>
+      <App/>
+    </Provider>,
     root
 );

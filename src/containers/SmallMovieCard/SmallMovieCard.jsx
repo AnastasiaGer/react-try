@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import VideoPlayer from '../VideoPlayer/VideoPlayer.jsx';
+import {CustomPropTypes} from '../../utils/props.js';
 
 export default class SmallMovieCard extends PureComponent {
   constructor(props) {
@@ -57,11 +58,7 @@ export default class SmallMovieCard extends PureComponent {
 }
 
 SmallMovieCard.propTypes = {
-  movieCard: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-    videoUrl: PropTypes.string.isRequired
-  }).isRequired,
+  movie: CustomPropTypes.MOVIE,
   onMovieCardClick: PropTypes.func,
   onMovieCardHover: PropTypes.func,
 };

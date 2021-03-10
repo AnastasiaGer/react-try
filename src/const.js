@@ -16,3 +16,5 @@ export const Tabs = {
   DETAILS: `Details`,
   REVIEWS: `Reviews`,
 };
+
+export const DefaultGenre = `All genres`;

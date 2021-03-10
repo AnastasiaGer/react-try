@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import SmallMovieCard from "../SmallMovieCard/SmallMovieCard.jsx";
+import {CustomPropTypes} from '../../utils/props.js';
 
 export default class MoviesList extends PureComponent {
   constructor(props) {
@@ -36,20 +37,6 @@ export default class MoviesList extends PureComponent {
 }
 
 MoviesList.propTypes = {
-  smallMovies: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        genre: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        background: PropTypes.string.isRequired,
-        poster: PropTypes.string.isRequired,
-        id: PropTypes.number.isRequired,
-        description: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-        rating: PropTypes.number.isRequired,
-        scores: PropTypes.number.isRequired,
-        director: PropTypes.string.isRequired,
-        starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-      }).isRequired
-  ).isRequired,
+  smallMovies: PropTypes.arrayOf(CustomPropTypes.MOVIE).isRequired,
   onMovieCardClick: PropTypes.func,
 };

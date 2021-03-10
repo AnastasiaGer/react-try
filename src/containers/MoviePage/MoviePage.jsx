@@ -5,6 +5,7 @@ import PageOverview from '../PageOverview/PageOverview.jsx';
 import PageDetails from '../PageDetails/PageDetails.jsx';
 import PageReviews from '../PageReviews/PageReviews.jsx';
 import MoviesList from '../MoviesList/MoviesList.jsx';
+import {CustomPropTypes} from '../../utils/props.js';
 
 import withTabs from '../../hocs/with-tabs.jsx';
 
@@ -144,45 +145,11 @@ const MoviePage = (props) => {
 };
 
 MoviePage.propTypes = {
-  movieCard: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-    background: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    description: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    rating: PropTypes.number.isRequired,
-    scores: PropTypes.number.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    movieDurationTime: PropTypes.string.isRequired,
-  }).isRequired,
+  movieCard: CustomPropTypes.MOVIE,
   renderTabs: PropTypes.func.isRequired,
   activeTab: PropTypes.string.isRequired,
-  movieReviews: PropTypes.arrayOf(
-      PropTypes.shape({
-        author: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        rating: PropTypes.number.isRequired,
-        text: PropTypes.string.isRequired,
-      }).isRequired
-  ),
-  smallMovies: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        genre: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        background: PropTypes.string.isRequired,
-        poster: PropTypes.string.isRequired,
-        id: PropTypes.number.isRequired,
-        description: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-        rating: PropTypes.number.isRequired,
-        scores: PropTypes.number.isRequired,
-        director: PropTypes.string.isRequired,
-        starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-      }).isRequired
-  ).isRequired,
+  movieReviews: CustomPropTypes.REVIEWS,
+  smallMovies: PropTypes.arrayOf(CustomPropTypes.MOVIE),
   onMovieCardClick: PropTypes.func,
   onMovieCardHover: PropTypes.func,
 };

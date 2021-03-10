@@ -5,6 +5,9 @@ import Main from "../Main/Main.jsx";
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import MoviePage from '../MoviePage/MoviePage.jsx';
 import {PageNames} from '../../const.js';
+import {CustomPropTypes} from '../../utils/props.js';
+import {connect} from "react-redux";
+// import {ActionCreator} from "../../reducer/reducer.js";
 
 
 class App extends PureComponent {
@@ -75,44 +78,25 @@ class App extends PureComponent {
 }
 
 App.propTypes = {
-  movieCard: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    background: PropTypes.string.isRequired,
-    poster: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    description: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    rating: PropTypes.number.isRequired,
-    scores: PropTypes.number.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  }).isRequired,
-  smallMovies: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        genre: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        background: PropTypes.string.isRequired,
-        poster: PropTypes.string.isRequired,
-        id: PropTypes.number.isRequired,
-        description: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-        rating: PropTypes.number.isRequired,
-        scores: PropTypes.number.isRequired,
-        director: PropTypes.string.isRequired,
-        starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-      }).isRequired
-  ).isRequired,
-  movieReviews: PropTypes.arrayOf(
-      PropTypes.shape({
-        author: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-        rating: PropTypes.number.isRequired,
-        text: PropTypes.string.isRequired,
-      }).isRequired
-  ),
+  movieCard: CustomPropTypes.MOVIE,
+  smallMovies: PropTypes.arrayOf(CustomPropTypes.MOVIE),
+  movieReviews: CustomPropTypes.REVIEWS,
   onMovieCardClick: PropTypes.func,
   onMovieCardHover: PropTypes.func,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  smallMovies: state.smallMovies,
+  movieCard: state.movieCard,
+  movieReviews: state.movieReviews,
+});
+
+// const mapDispatchToProps = (dispatch) => ({
+//   onGenreItemClick(genre) {
+//     dispatch(ActionCreator.getFilmsByGenre(genre));
+//     dispatch(ActionCreator.changeFilter(genre));
+//   },
+// });
+
+export {App};
+export default connect(mapStateToProps)(App);
