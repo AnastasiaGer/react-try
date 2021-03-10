@@ -7,7 +7,7 @@ import MoviePage from '../MoviePage/MoviePage.jsx';
 import {PageNames} from '../../const.js';
 import {CustomPropTypes} from '../../utils/props.js';
 import {connect} from "react-redux";
-// import {ActionCreator} from "../../reducer/reducer.js";
+import {ActionCreator} from "../../reducer/reducer.js";
 
 
 class App extends PureComponent {
@@ -23,7 +23,7 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {movieCard, smallMovies, movieReviews, onMovieCardClick, onMovieCardHover} = this.props;
+    const {movieCard, smallMovies, movieReviews, onMovieCardClick, onMovieCardHover, genres, activeGenre, onGenreItemClick} = this.props;
     const {currentPage, currentMovie} = this.state;
 
     if (currentPage === PageNames.MAIN) {
@@ -32,6 +32,9 @@ class App extends PureComponent {
           movieCard={movieCard}
           smallMovies={smallMovies}
           onMovieCardClick={this.handleMovieClick}
+          genres={genres}
+          activeGenre={activeGenre}
+          onGenreItemClick={onGenreItemClick}
         />
       );
     }
@@ -83,20 +86,25 @@ App.propTypes = {
   movieReviews: CustomPropTypes.REVIEWS,
   onMovieCardClick: PropTypes.func,
   onMovieCardHover: PropTypes.func,
+  activeGenre: PropTypes.string,
+  genres: PropTypes.arrayOf(PropTypes.string),
+  onGenreItemClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  activeGenre: state.activeGenre,
   smallMovies: state.smallMovies,
   movieCard: state.movieCard,
   movieReviews: state.movieReviews,
+  genres: state.genres,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   onGenreItemClick(genre) {
-//     dispatch(ActionCreator.getFilmsByGenre(genre));
-//     dispatch(ActionCreator.changeFilter(genre));
-//   },
-// });
+const mapDispatchToProps = (dispatch) => ({
+  onGenreItemClick(genre) {
+    dispatch(ActionCreator.getFilmsByGenre(genre));
+    dispatch(ActionCreator.changeFilter(genre));
+  },
+});
 
 export {App};
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

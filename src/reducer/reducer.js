@@ -42,11 +42,11 @@ const ActionCreator = {
     if (genre === DefaultGenre) {
       return {
         type: ActionType.GET_FILMS_BY_GENRE,
-        payload: initialState.movies,
+        payload: initialState.smallMovies,
       };
     }
 
-    const filteredFilms = getFilmsByGenre(initialState.movies, genre);
+    const filteredFilms = getFilmsByGenre(initialState.smallMovies, genre);
 
     return {
       type: ActionType.GET_FILMS_BY_GENRE,
@@ -64,7 +64,7 @@ const reducer = (state = extend(initialState), action) => {
 
     case ActionType.GET_FILMS_BY_GENRE:
       return extend(state, {
-        movies: action.payload,
+        smallMovies: action.payload,
       });
   }
 
