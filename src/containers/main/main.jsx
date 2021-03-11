@@ -4,7 +4,7 @@ import MoviesList from '../MoviesList/MoviesList.jsx';
 import {CustomPropTypes} from '../../utils/props.js';
 import GenresList from '../GenresList/GenresList.jsx';
 import ShowMoreButton from '../ShowMoreButton/ShowMoreButton.jsx';
-const Main = ({movieCard, smallMovies, onMovieCardClick, onMovieCardHover, onGenreItemClick, activeGenre, genres, onShowMoreClick, shown}) => {
+const Main = ({movieCard, smallMovies, onMovieCardClick, onMovieCardHover, onGenreItemClick, activeGenre, genres, onShowMoreClick, shown, onPlayClick}) => {
   const {title, genre, date} = movieCard;
   return (
     <React.Fragment>
@@ -45,7 +45,9 @@ const Main = ({movieCard, smallMovies, onMovieCardClick, onMovieCardHover, onGen
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
+                <button className="btn btn--play movie-card__button" type="button"
+                  onClick={() => onPlayClick(movieCard)}
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -111,6 +113,7 @@ Main.propTypes = {
   onGenreItemClick: PropTypes.func,
   onShowMoreClick: PropTypes.func,
   shown: PropTypes.number,
+  onPlayClick: PropTypes.func,
 };
 
 export default Main;

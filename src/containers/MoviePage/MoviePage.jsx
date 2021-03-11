@@ -15,7 +15,7 @@ const getSimilarCards = (arr, genre) => {
 
 const MoviePage = (props) => {
   const {movieCard, movieReviews, renderTabs,
-    activeTab, smallMovies, onMovieCardClick, onMovieCardHover} = props;
+    activeTab, smallMovies, onMovieCardClick, onMovieCardHover, onPlayClick} = props;
   const {title, genre, date, poster, background, rating, description, starring, director, scores, movieDurationTime} = movieCard;
 
   const similarCards = getSimilarCards(smallMovies, genre);
@@ -81,7 +81,9 @@ const MoviePage = (props) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
+                <button className="btn btn--play movie-card__button" type="button"
+                  onClick={() => onPlayClick(movieCard)}
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -152,6 +154,7 @@ MoviePage.propTypes = {
   smallMovies: PropTypes.arrayOf(CustomPropTypes.MOVIE),
   onMovieCardClick: PropTypes.func,
   onMovieCardHover: PropTypes.func,
+  onPlayClick: PropTypes.func,
 };
 
 
