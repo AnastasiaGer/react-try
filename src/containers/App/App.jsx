@@ -7,12 +7,17 @@ import MoviePage from '../MoviePage/MoviePage.jsx';
 import {PageNames} from '../../const.js';
 import {CustomPropTypes} from '../../utils/props.js';
 import {connect} from "react-redux";
-import {ActionCreator} from "../../reducer/reducer.js";
+import {getMovies, getMovieCard, getMovieReviews} from '../../reducer/data/selectors';
+import {ActionCreator} from '../../reducer/app-state/app-state';
+import {getMoviesGenres} from '../../reducer/data/selectors';
+import {getActiveGenre, getIsMoviePlayerActive} from '../../reducer/app-state/selectors';
 import FullVideoPlayer from '../FullVideoPlayer/FullVideoPlayer.jsx';
 import withVideoControls from '../../hocs/with-full-video.js';
+import withTabs from '../../hocs/with-tabs.jsx';
+
 
 const FullVideoPlayerWrapped = withVideoControls(FullVideoPlayer);
-
+const MoviePageWrapped = withTabs(MoviePage);
 class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -52,7 +57,7 @@ class App extends PureComponent {
 
     if (currentPage === PageNames.MOVIE_DETAILS) {
       return (
-        <MoviePage
+        <MoviePageWrapped
           movieCard={currentMovie}
           movieReviews={movieReviews}
           smallMovies={smallMovies}
@@ -119,18 +124,17 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  activeGenre: state.activeGenre,
-  smallMovies: state.smallMovies,
-  movieCard: state.movieCard,
-  movieReviews: state.movieReviews,
-  genres: state.genres,
+  activeGenre: getActiveGenre(state),
+  smallMovies: getMovies(state),
+  movieCard: getMovieCard(state),
+  movieReviews: getMovieReviews(state),
+  genres: getMoviesGenres(state),
   shown: state.cardsToShow,
-  isVideoPlayer: state.isVideoPlayer,
+  isVideoPlayer: getIsMoviePlayerActive(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreItemClick(genre) {
-    dispatch(ActionCreator.getFilmsByGenre(genre));
     dispatch(ActionCreator.changeFilter(genre));
   },
   onShowMoreClick() {

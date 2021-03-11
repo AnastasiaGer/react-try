@@ -6,19 +6,13 @@ import PageDetails from '../PageDetails/PageDetails.jsx';
 import PageReviews from '../PageReviews/PageReviews.jsx';
 import MoviesList from '../MoviesList/MoviesList.jsx';
 import {CustomPropTypes} from '../../utils/props.js';
-
-import withTabs from '../../hocs/with-tabs.jsx';
-
-const getSimilarCards = (arr, genre) => {
-  return arr.filter((movie) => movie.genre === genre).slice(0, 4);
-};
+import {connect} from 'react-redux';
+import {getCurrentMovie} from '../../reducer/app-state/selectors.js';
 
 const MoviePage = (props) => {
-  const {movieCard, movieReviews, renderTabs,
-    activeTab, smallMovies, onMovieCardClick, onMovieCardHover, onPlayClick} = props;
-  const {title, genre, date, poster, background, rating, description, starring, director, scores, movieDurationTime} = movieCard;
-
-  const similarCards = getSimilarCards(smallMovies, genre);
+  const {currentMovie, movieReviews, renderTabs,
+    activeTab, onPlayClick} = props;
+  const {title, genre, date, poster, background, rating, description, starring, director, scores, movieDurationTime} = currentMovie;
 
   const renderActiveTab = () => {
     switch (activeTab) {
@@ -82,7 +76,7 @@ const MoviePage = (props) => {
 
               <div className="movie-card__buttons">
                 <button className="btn btn--play movie-card__button" type="button"
-                  onClick={() => onPlayClick(movieCard)}
+                  onClick={() => onPlayClick(currentMovie)}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
@@ -122,9 +116,6 @@ const MoviePage = (props) => {
           <h2 className="catalog__title">More like this</h2>
 
           <MoviesList
-            smallMovies={similarCards}
-            onMovieCardClick={onMovieCardClick}
-            onMovieCardHover={onMovieCardHover}
           />
         </section>
 
@@ -147,15 +138,22 @@ const MoviePage = (props) => {
 };
 
 MoviePage.propTypes = {
-  movieCard: CustomPropTypes.MOVIE,
+  currentMovie: CustomPropTypes.MOVIE,
   renderTabs: PropTypes.func.isRequired,
   activeTab: PropTypes.string.isRequired,
-  movieReviews: CustomPropTypes.REVIEWS,
-  smallMovies: PropTypes.arrayOf(CustomPropTypes.MOVIE),
+  movieReviews: PropTypes.PropTypes.oneOfType([
+    PropTypes.arrayOf(CustomPropTypes.REVIEWS),
+    PropTypes.bool,
+  ]),
   onMovieCardClick: PropTypes.func,
   onMovieCardHover: PropTypes.func,
   onPlayClick: PropTypes.func,
 };
 
+const mapStateToProps = (state) => {
+  return {
+    currentMovie: getCurrentMovie(state),
+  };
+};
 
-export default withTabs(MoviePage);
+export default connect(mapStateToProps)(MoviePage);
